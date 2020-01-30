@@ -9,10 +9,10 @@ def get_html(url, params=None):
 	r = requests.get(url, headers=HEADERS, params=params)
 	return r
 
-def get_pages_count(html):
-	soup = BeautifulSoup(html, 'html.parser')
-	pagination = soup.find('div', class_='bx-pagination-container').find_next('ul').find('li', class_='bx-active').find_next('li')
-	print(pagination)
+# def get_pages_count(html):
+# 	soup = BeautifulSoup(html, 'html.parser')
+# 	pagination = soup.find('div', class_='bx-pagination-container').find_next('ul').find('li', class_='bx-active').find_next('li')
+# 	print(pagination)
 
 
 def get_content(html):
@@ -28,20 +28,20 @@ def get_content(html):
 			# 'product_code': item.find('p').get_text(strip=True).replace("Артикул:", "")
 		})
 
-	# print(products)
-	return products
+	print(products)
+	# return products
 
 def parse():
 	html = get_html(URL)
 	if html.status_code == 200:
-		products = []
-		pages_count = get_pages_count(html.text)
-		for page in range(1, pages_count + 1):
-			print(f'Парсинг страницы (page) из (pages_count)...')
-			html = get_html(URL, params=('PAGEN_1', page))
-			products.extend(get_content(html.text))
-		# products = get_content(html.text)
-		print(products)
+		# products = []
+		# pages_count = get_pages_count(html.text)
+		# for page in range(1, pages_count + 1):
+		# 	print(f'Парсинг страницы (page) из (pages_count)...')
+		# 	html = get_html(URL, params=('PAGEN_1', page))
+		# 	products.extend(get_content(html.text))
+		products = get_content(html.text)
+		# print(products)
 	else:
 		print('Error')
 
